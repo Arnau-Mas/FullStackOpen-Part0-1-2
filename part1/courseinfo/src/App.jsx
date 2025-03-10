@@ -1,4 +1,4 @@
-import { Total } from "../Total"
+import { Total } from "./Total"
 import { Content } from "./Content"
 import { Header } from "./Header"
 
