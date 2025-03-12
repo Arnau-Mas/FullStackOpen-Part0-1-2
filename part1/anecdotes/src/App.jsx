@@ -1,5 +1,17 @@
 import { useState } from 'react'
 
+const AnecdoteOfTheDay = ({anecdote, votes, voteAnecdote, nextAnecdote}) => {
+  return (
+    <>
+      <h3>Anecdote of the day</h3>
+      <p>{anecdote}</p>
+      <p>has {votes} votes</p>
+      <button onClick={voteAnecdote}>vote</button>
+      <button onClick={nextAnecdote}>next anecdote</button>
+    </>
+  )
+}
+
 const App = () => {
   const [votes, setVotes] = useState([]);
 
@@ -29,10 +41,7 @@ const App = () => {
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected] ? votes[selected] : 0} votes</p>
-      <button onClick={() => voteAnecdote(selected)}>vote</button>
-      <button onClick={nextAnecdote}>next anecdote</button>
+      <AnecdoteOfTheDay anecdote={anecdotes[selected]} votes={votes[selected] ? votes[selected] : 0} voteAnecdote={() => voteAnecdote(selected)} nextAnecdote={nextAnecdote}/> 
     </div>
   )
 }
