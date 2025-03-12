@@ -1,6 +1,6 @@
 export const Total = ({parts}) => {
-  console.log({parts})
+  let numberOfExercises = parts.map(part => part.exercises).reduce((accumulator, currentValue) => accumulator+currentValue, 0)
   return (
-    <p>Number of exercises {"a"}</p>
+    <p><strong>total of {numberOfExercises} exercises</strong></p>
   )
 }
