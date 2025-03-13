@@ -12,8 +12,14 @@ const App = () => {
 
   function handleSubmit(e){
     e.preventDefault();
-    setPersons([...persons, {name:newName}]);
-    setNewName("");
+    let personExists = persons.some(person => person.name.toUpperCase() === newName.toUpperCase())
+    
+    if(personExists){
+      alert(`${newName} is already added to phonebook`)
+    }else{
+      setPersons([...persons, {name:newName}]);
+      setNewName("");
+    }
   }
 
   return (
@@ -29,7 +35,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {
-        persons.map((person, i) => <p key={person.name}>{person.name}</p>)
+        persons.map(person => <p key={person.name}>{person.name}</p>)
       }
     </div>
   )
