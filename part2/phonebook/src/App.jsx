@@ -57,7 +57,7 @@ const App = () => {
       <Filter filter={filter} handleFilter={handleFilter} />
       <PersonForm handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} handleName={handleName} handleNumber={handleNumber} />
       <h2>Numbers</h2>
-      <Persons filterPersons={filterPersons} />
+      <Persons filterPersons={filterPersons} setPersons={setPersons} />
     </div>
   )
 }
