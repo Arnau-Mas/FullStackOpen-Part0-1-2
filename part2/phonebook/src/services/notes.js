@@ -11,6 +11,12 @@ export const addNote = (newPerson) => {
     .then(res => res.data)
 }
 
+export const modifyNote = (person) => {
+    console.log(person, person.id)
+    return axios.put(`http://localhost:3001/persons/${person.id}`, person)
+    .then(res => res.data)
+}
+
 export const deleteNote = (id) => {
     return axios.delete(`http://localhost:3001/persons/${id}`)
     .then(res => res.data)

@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 import { Filter } from './components/Filter'
 import { PersonForm } from './components/PersonForm'
 import { Persons } from './components/Persons'
-import { addNote, getNotes } from './services/notes'
+import { addNote, getNotes, modifyNote } from './services/notes'
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  console.log("re-render", persons)
   
   useEffect(() => {
       getNotes().then(res => setPersons(res))
@@ -31,15 +30,23 @@ const App = () => {
 
   function handleSubmit(e){
     e.preventDefault();
-    let personExists = persons.some(person => person.name.toUpperCase() === newName.toUpperCase())
+    const newPerson = {
+      name: newName,
+      number:newNumber
+    }
 
-    if(personExists){
-      alert(`${newName} is already added to phonebook`)
-    }else{
-      const newPerson = {
-        name: newName,
+    let personExists = persons.find(person => person.name.toUpperCase() === newName.toUpperCase())
+
+    if(personExists !== undefined){
+      let modifiedPerson = {
+        ...personExists,
         number:newNumber
       }
+      /* alert(`${newName} is already added to phonebook`) */
+      modifyNote(modifiedPerson)
+        .then(res => setPersons(prev => prev.map(person => person.id !== personExists.id ? person : res)))
+        .catch(err => console.log("*^", err))
+    }else{
       addNote(newPerson)
         .then(res => setPersons(prev => [...prev, res]))
       setNewName("");
