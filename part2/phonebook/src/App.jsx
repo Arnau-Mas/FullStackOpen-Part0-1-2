@@ -27,7 +27,7 @@ const App = () => {
 
   function handleNumber(e){
     setNewNumber(e.target.value)
-  }
+  } 
 
   function handleSubmit(e){
     e.preventDefault();
