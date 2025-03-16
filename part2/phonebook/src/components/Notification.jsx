@@ -1,8 +1,11 @@
-export const Notification = ({added}) => {
-    if(added===null){
+export const Notification = ({added, errorMessage}) => {
+    if(added===null && errorMessage===null){
+        console.log('addednull')
         return null
+        
     }
+
   return (
-    <p className='addedMessage'>{added}</p>
+    <p className={added? "addedMessage" : "errorMessage"}>{added ? added : errorMessage}</p>
   )
 }

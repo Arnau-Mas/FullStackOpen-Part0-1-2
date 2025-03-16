@@ -17,6 +17,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [added, setAdded] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   const [filter, setFilter] = useState("");
   let filterPersons = filter ? persons.filter(person => person.name.toUpperCase().startsWith(filter.toUpperCase())) : persons;
 
@@ -57,7 +58,14 @@ const App = () => {
             setAdded(null)
           }, 5000)
         })
-        .catch(err => console.log("err modifying", err))
+        .catch(err => {
+          setErrorMessage(`Information of ${modifiedPerson.name} has already been removed from server`);
+          clearInputs();
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+          console.log('err', err); 
+        })
     }else{
       addNote(newPerson)
         .then(res => {
@@ -78,7 +86,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification added={added} />
+      <Notification added={added} errorMessage={errorMessage}/>
       <Filter filter={filter} handleFilter={handleFilter} />
       <PersonForm handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} handleName={handleName} handleNumber={handleNumber} />
       <h2>Numbers</h2>
