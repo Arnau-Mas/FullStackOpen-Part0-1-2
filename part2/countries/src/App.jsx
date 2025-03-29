@@ -25,7 +25,9 @@ function App() {
     <>
       <label style={{marginRight:"5px"}} htmlFor="country">find countries</label><input onChange={handleChange} type="text" name="" id="" value={search} />
       {
-        filteredCountries.length>10 ? <p>Too many matches, specify another filter</p>
+        filteredCountries.length>10 
+        ? 
+        <p>Too many matches, specify another filter</p>
         :
         <Countries countries={filteredCountries} /> 
       }
