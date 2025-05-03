@@ -1,17 +1,6 @@
 import { deleteNote } from "../services/notes"
 
-export const Persons = ({filterPersons, setPersons}) => {
-
-  function handleDelete(id){
-    let personToDelete = filterPersons.find(person => person.id === id);
-    if(window.confirm(`Delete ${personToDelete.name}?`)){
-      deleteNote(id)
-      .then(res => {
-        setPersons(prev => prev.filter(person => person.id!==res.id))
-      })
-      .catch(err => console.log('err', err))
-      }
-    }
+export const Persons = ({filterPersons, handleDelete}) => {
    
   return (
     <>

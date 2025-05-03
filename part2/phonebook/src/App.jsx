@@ -2,16 +2,11 @@ import { useEffect, useState } from 'react'
 import { Filter } from './components/Filter'
 import { PersonForm } from './components/PersonForm'
 import { Persons } from './components/Persons'
-import { addNote, getNotes, modifyNote } from './services/notes'
+import { addNote, deleteNote, getNotes, modifyNote } from './services/notes'
 import { Notification } from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  
-  useEffect(() => {
-      getNotes().then(res => setPersons(res))
-  }, [])
-  
 
   // I could do only one state to setPerson
   const [newName, setNewName] = useState('')
@@ -48,8 +43,9 @@ const App = () => {
         ...personExists,
         number:newNumber
       }
-      /* alert(`${newName} is already added to phonebook`) */
-      modifyNote(modifiedPerson)
+      const response = confirm(`${newName} is already added to phonebook, replace the old number with a new one?`);
+      if(response){
+        modifyNote(modifiedPerson)
         .then(res => {
           setPersons(prev => prev.map(person => person.id !== personExists.id ? person : res));
           setAdded(`Modified ${res.name}`);
@@ -66,6 +62,8 @@ const App = () => {
           }, 5000)
           console.log('err', err); 
         })
+      }
+      
     }else{
       addNote(newPerson)
         .then(res => {
@@ -79,9 +77,25 @@ const App = () => {
     }
   }
 
+  function handleDelete(id){
+    let personToDelete = filterPersons.find(person => person.id === id);
+    
+    if(window.confirm(`Delete ${personToDelete.name}?`)){
+      deleteNote(id)
+        .then(() => {
+          setPersons(prev => prev.filter(person => person.id!==id))
+        })
+        .catch(err => console.log('err', err))
+        }
+  }
+
   function handleFilter(e){
       setFilter(e.target.value);
   }
+
+  useEffect(() => {
+    getNotes().then(res => setPersons(res))
+}, [])
 
   return (
     <div>
@@ -90,7 +104,7 @@ const App = () => {
       <Filter filter={filter} handleFilter={handleFilter} />
       <PersonForm handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} handleName={handleName} handleNumber={handleNumber} />
       <h2>Numbers</h2>
-      <Persons filterPersons={filterPersons} setPersons={setPersons} />
+      <Persons filterPersons={filterPersons} handleDelete={handleDelete} />
     </div>
   )
 }

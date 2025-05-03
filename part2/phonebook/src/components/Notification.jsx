@@ -1,8 +1,6 @@
 export const Notification = ({added, errorMessage}) => {
     if(added===null && errorMessage===null){
-        console.log('addednull')
         return null
-        
     }
 
   return (

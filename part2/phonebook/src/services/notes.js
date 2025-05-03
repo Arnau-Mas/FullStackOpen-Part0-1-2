@@ -12,7 +12,6 @@ export const addNote = (newPerson) => {
 }
 
 export const modifyNote = (person) => {
-    console.log(person, person.id)
     return axios.put(`http://localhost:3001/persons/${person.id}`, person)
     .then(res => res.data)
 }
