@@ -2,7 +2,7 @@ import axios from "axios";
 
 const personsUrl = "http://localhost:3001/persons";
 
-export const getPerson = () => {
+export const getPersons = () => {
     return axios.get(personsUrl).then(response => response.data);
 }
 
