@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Filter } from './components/Filter'
 import { PersonForm } from './components/PersonForm'
 import { Persons } from './components/Persons'
-import { addNote, deleteNote, getNotes, modifyNote } from './services/notes'
+import { addPerson, deletePerson, getPersons, modifyPerson } from './services/persons'
 import { Notification } from './components/Notification'
 
 const App = () => {
@@ -45,7 +45,7 @@ const App = () => {
       }
       const response = confirm(`${newName} is already added to phonebook, replace the old number with a new one?`);
       if(response){
-        modifyNote(modifiedPerson)
+        modifyPerson(modifiedPerson)
         .then(res => {
           setPersons(prev => prev.map(person => person.id !== personExists.id ? person : res));
           setAdded(`Modified ${res.name}`);
@@ -65,7 +65,7 @@ const App = () => {
       }
       
     }else{
-      addNote(newPerson)
+      addPerson(newPerson)
         .then(res => {
           setPersons(prev => [...prev, res])
           setAdded(`Added ${res.name}`);
@@ -81,7 +81,7 @@ const App = () => {
     let personToDelete = filterPersons.find(person => person.id === id);
     
     if(window.confirm(`Delete ${personToDelete.name}?`)){
-      deleteNote(id)
+      deletePerson(id)
         .then(() => {
           setPersons(prev => prev.filter(person => person.id!==id))
         })
@@ -94,7 +94,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    getNotes().then(res => setPersons(res))
+    getPersons().then(res => setPersons(res))
 }, [])
 
   return (
