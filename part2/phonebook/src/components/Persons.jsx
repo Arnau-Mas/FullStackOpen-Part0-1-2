@@ -1,5 +1,3 @@
-import { deleteNote } from "../services/persons"
-
 export const Persons = ({filterPersons, handleDelete}) => {
    
   return (
